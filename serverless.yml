@@ -4,10 +4,7 @@ provider:
   name: aws
   runtime: dotnet6
   stage: ${opt:stage}
-  region: us-west-2
-
-plugins:
-  - serverless-domain-manager
+  region: us-east-1
 
 package:
   artifact: serverless.zip
@@ -27,15 +24,3 @@ custom:
   environment:
     DOTNET_CLI_TELEMETRY_OPTOUT: true
     VERSION: ${env:VERSION, '0.0.0'}
-  domains:
-    dev:
-      domainName: serverless.hoon.io
-      certificateName: 'hoon.io'
-    prod:
-      domainName: serverless.hoonio.com
-      certificateName: 'hoonio.com'
-  customDomain:
-    domainName: ${self:custom.domains.${self:provider.stage}.domainName}
-    stage: ${self:provider.stage}
-    certificateName: ${self:custom.domains.${self:provider.stage}.certificateName}
-    createRoute53Record: true

@@ -1,0 +1,27 @@
+{
+  "name": "serverless-dotnet",
+  "description": ".net Core project",
+  "main": "Startup.cs",
+  "scripts": {
+    "start": "dotnet run",
+    "build": "dotnet lambda package --configuration Debug --framework net6.0 --output-package bin/Release/net6.0/serverless.zip",
+    "dev": "VERSION=1.2.3 dotnet run --no-launch-profile --urls=http://localhost:3009/",
+    "deploy": "serverless deploy",
+    "restore": "dotnet restore",
+    "test": "serverless invoke -f hello"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoonio/serverless-dotnet.git"
+  },
+  "keywords": [
+    ".net",
+    "Serverless"
+  ],
+  "author": "Hoonio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoonio/serverless-dotnet/issues"
+  },
+  "homepage": "https://github.com/hoonio/serverless-dotnet#readme"
+}

@@ -1,0 +1,41 @@
+service: serverless
+
+provider:
+  name: aws
+  runtime: dotnet6
+  stage: ${opt:stage}
+  region: us-west-2
+
+plugins:
+  - serverless-domain-manager
+
+package:
+  artifact: serverless.zip
+
+functions:
+  app:
+    description: .Net Core Application  
+    environment: ${self:custom.environment}
+    handler: serverless::serverless.LambdaEntryPoint::FunctionHandlerAsync
+    timeout: 30
+    memory: 256
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+custom:
+  environment:
+    DOTNET_CLI_TELEMETRY_OPTOUT: true
+    VERSION: ${env:VERSION, '0.0.0'}
+  domains:
+    dev:
+      domainName: serverless.hoon.io
+      certificateName: 'hoon.io'
+    prod:
+      domainName: serverless.hoonio.com
+      certificateName: 'hoonio.com'
+  customDomain:
+    domainName: ${self:custom.domains.${self:provider.stage}.domainName}
+    stage: ${self:provider.stage}
+    certificateName: ${self:custom.domains.${self:provider.stage}.certificateName}
+    createRoute53Record: true

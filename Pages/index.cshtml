@@ -1,0 +1,26 @@
+@page
+@functions
+{
+  public string? Version { get; set; }
+  public void OnGet()
+  {
+    ViewData["Title"] = "Serverless";
+    Model.Version = Environment.GetEnvironmentVariable("VERSION");
+  }
+}
+	<div class="page">
+		<h1>serverless <span id="version">@Model.Version</span></h1>
+		<h3>Home</h3>
+		<ul>
+			<li><a href="/hello">Hello</a></li>
+			<li><a href="/pong">Ping</a></li>
+			<li><a href="/version">Version</a></li>
+		</ul>
+		<h3>Calculator</h3>
+		<ul id="calculator-actions">
+			<li><a href="calculator/add/3/4">Add</a></li>
+			<li><a href="calculator/subtract/7/4">Subtract</a></li>
+			<li><a href="calculator/multiply/3/4">Multiply</a></li>
+			<li><a href="calculator/divide/12/4">Divide</a></li>
+		</ul>
+	</div>

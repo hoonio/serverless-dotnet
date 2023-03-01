@@ -1,26 +1,16 @@
-service: serverless
+service: serverless-dotnet
 
 provider:
   name: aws
   runtime: dotnet6
-  stage: ${opt:stage}
-  region: us-east-1
+  stage: dev
 
 package:
-  artifact: serverless.zip
+  artifact: bin/Release/net6.0/serverless-dotnet.zip
 
 functions:
   app:
-    description: .Net Core Application  
-    environment: ${self:custom.environment}
-    handler: serverless::serverless.LambdaEntryPoint::FunctionHandlerAsync
-    timeout: 30
-    memory: 256
+    handler: serverless-dotnet::serverless_dotnet.LambdaEntryPoint::FunctionHandlerAsync
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-
-custom:
-  environment:
-    DOTNET_CLI_TELEMETRY_OPTOUT: true
-    VERSION: ${env:VERSION, '0.0.0'}
